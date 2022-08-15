@@ -7,6 +7,7 @@ import {
   Body,
   Param,
 } from '@nestjs/common';
+import { LibrosService } from './libros.service';
 
 import { CrearLibroDto } from './dto/crear-libro';
 // @Post() // C
@@ -16,23 +17,34 @@ import { CrearLibroDto } from './dto/crear-libro';
 
 @Controller('libros')
 export class LibrosController {
+  constructor(private readonly libroService: LibrosService) {}
+
   @Get()
   getAllLibros(): string {
-    return `Todos los libros!`;
+    return this.libroService.getAllLibros();
+  }
+
+  @Get(':id')
+  getOneLibro(@Param('id') idLibro: string): string {
+    //TODO:id
+    return this.libroService.getOneLibro(idLibro);
   }
 
   @Post()
   postLibro(@Body() libroDto: CrearLibroDto): string {
-    return `Creado nuevo libro con titulo ${libroDto.titulo}`;
+    return this.libroService.postLibro(libroDto);
   }
 
   @Put(':id')
-  putLibro(@Param('id') idLibro: string, @Body() libroDto: CrearLibroDto): string {
-    return `Libro ${idLibro} modificado!`;
+  putLibro(
+    @Param('id') idLibro: string,
+    @Body() libroDto: CrearLibroDto,
+  ): string {
+    return this.libroService.putLibro(idLibro, libroDto);
   }
 
   @Delete(':id')
   deleteLibro(@Param('id') idLibro: string): string {
-    return `Libro ${idLibro} eliminado!!`;
+    return this.libroService.deleteLibro(idLibro);
   }
 }
