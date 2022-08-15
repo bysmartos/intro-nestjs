@@ -8,7 +8,7 @@ import {
   Param,
 } from '@nestjs/common';
 import { LibrosService } from './libros.service';
-
+import { LibroI } from './interfaces/libro.interface';
 import { CrearLibroDto } from './dto/crear-libro';
 // @Post() // C
 // @Get() //  R
@@ -20,18 +20,18 @@ export class LibrosController {
   constructor(private readonly libroService: LibrosService) {}
 
   @Get()
-  getAllLibros(): string {
+  getAllLibros(): Promise<LibroI[]> {
     return this.libroService.getAllLibros();
   }
 
   @Get(':id')
-  getOneLibro(@Param('id') idLibro: string): string {
+  getOneLibro(@Param('id') idLibro: string): Promise<LibroI> {
     //TODO:id
     return this.libroService.getOneLibro(idLibro);
   }
 
   @Post()
-  postLibro(@Body() libroDto: CrearLibroDto): string {
+  postLibro(@Body() libroDto: CrearLibroDto): Promise<LibroI> {
     return this.libroService.postLibro(libroDto);
   }
 
@@ -39,12 +39,12 @@ export class LibrosController {
   putLibro(
     @Param('id') idLibro: string,
     @Body() libroDto: CrearLibroDto,
-  ): string {
+  ): Promise<LibroI> {
     return this.libroService.putLibro(idLibro, libroDto);
   }
 
   @Delete(':id')
-  deleteLibro(@Param('id') idLibro: string): string {
+  deleteLibro(@Param('id') idLibro: string): Promise<LibroI> {
     return this.libroService.deleteLibro(idLibro);
   }
 }

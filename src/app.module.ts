@@ -9,7 +9,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 @Module({
   imports: [
     MongooseModule.forRoot('mongodb://localhost/crudNest'),
-  MongooseModule.forFeature([{name: 'libros', schema: LibroSchema}])
+  MongooseModule.forFeature([{name: 'Libro', schema: LibroSchema}])
   ],
   controllers: [AppController, LibrosController],
   providers: [AppService, LibrosService],

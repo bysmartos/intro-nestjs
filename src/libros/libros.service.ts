@@ -9,7 +9,7 @@ export class LibrosService {
     @InjectModel('Libro') private readonly libroModel: Model<LibroI>,
   ) {}
 
-  async getAllLibros(): Promise<LibroI> {
+  async getAllLibros(): Promise<LibroI[]> {
     return await this.libroModel.find();
   }
 
@@ -18,14 +18,15 @@ export class LibrosService {
   }
 
   async postLibro(libro: LibroI): Promise<LibroI> {
-    return `Creado nuevo libro con titulo ${libro.id}`;
+    const nuevoLibro = new this.libroModel(libro);
+    return await nuevoLibro.save();
   }
 
-  putLibro(id: string, libro: LibroI) {
-    return 'Modificar libro';
+  async putLibro(id: string, libro: LibroI): Promise<LibroI> {
+    return await this.libroModel.findByIdAndUpdate(id, libro, { new: true });
   }
 
-  deleteLibro(id: string) {
-    return 'Eliminar libro';
+  async deleteLibro(id: string): Promise<LibroI> {
+    return await this.libroModel.findByIdAndRemove(id);
   }
 }
